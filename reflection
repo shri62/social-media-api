@@ -1,0 +1,23 @@
+1. Why whitelist IP addresses in production? What are the risks of allowing 0.0.0.0/0?
+
+An IP whitelist works like a guest list for your database. Only computers on the list can even try to connect. In production, you add only your own servers.
+
+With 0.0.0.0/0, anyone in the world can try to connect. They can guess passwords over and over, or try to use a leaked password from anywhere. They can also look for security holes in the database. Your password becomes the only protection, and if it leaks, attackers can read, change, or delete your data.
+
+2. What is dotenv for? What other ways can you manage environment variables in production?
+
+dotenv reads secrets like MONGO_URI from a .env file and makes them available in your code as process.env. This keeps passwords out of your code, so they don't end up on GitHub.
+
+In production, you usually don't use a .env file. Other ways:
+
+Set variables in the hosting service's settings, such as Render, Heroku, Vercel, or Railway.
+Use a secrets manager, such as AWS Secrets Manager or Azure Key Vault.
+Set them in the server's environment or in a CI/CD pipeline.
+3. If the app can't connect, what are the first debugging steps?
+
+Read the error message in the terminal. It usually says what's wrong.
+Check that .env exists, is named correctly, and that MONGO_URI is set.
+Check the username and password in the connection string. Make sure <password> was replaced.
+Check Atlas Network Access to confirm your IP is allowed.
+Check that the cluster is running in Atlas.
+Check your internet connection or firewall.
